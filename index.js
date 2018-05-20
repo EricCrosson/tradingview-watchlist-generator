@@ -16,6 +16,11 @@ client.allBookTickers().then((res, err) => {
                          _.filter(res, (obj) => {return obj.symbol.endsWith('BTC')}),
                          (acc, obj) => {return acc + 'BINANCE:' + obj.symbol.replace('BTC', 'USD') + ','}, ''))
 
+    fs.writeFileSync('output/scan-binance-bch-pairs.txt',
+                     matches = _.reduce(
+                         _.filter(res, (obj) => {return obj.symbol.endsWith('BTC')}),
+                         (acc, obj) => {return acc + 'BINANCE:' + obj.symbol + '/BINANCE:BCCBTC' + ','}, ''))
+
     fs.writeFileSync('output/scan-binance-eth-pairs.txt',
                      matches = _.reduce(
                          _.filter(res, (obj) => {return obj.symbol.endsWith('ETH')}),
