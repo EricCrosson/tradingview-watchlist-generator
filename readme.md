@@ -1,6 +1,6 @@
 # binance-watchlist-generator
 
-> Generate TradingView=importable watchlists of all assets on Binance
+> Generate TradingView-importable watchlists of all assets on Binance
 
 ## use
 
