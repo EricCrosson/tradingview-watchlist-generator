@@ -1,6 +1,7 @@
-# binance-watchlist-generator
+# tradingview-watchlist-generator
 
-> Generate TradingView-importable watchlists of all assets on Binance
+> Generate TradingView-importable watchlists of all assets offered on
+> supported cryptocurrency exchanges
 
 ## use
 

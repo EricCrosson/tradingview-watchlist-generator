@@ -1,34 +1,81 @@
-const Binance = require('binance-api-node').default
-const _ = require('lodash')
 const fs = require('fs')
+// TODO: is lodash really necessary?
+const _ = require('lodash')
 
-const client = Binance()
+const Binance = require('binance-api-node').default
+const binance = Binance()
+
+// TODO: use logger with error messages
+
+// TODO: allow generation of non-exchange pairs (e.g. replace BTC with USD)
+
+const docopt = require('docopt').docopt
+const docstring = `
+Usage:
+  watchlist <exchange> [-b=<basepair>] [--inverse]
+  watchlist -h | --help
+  watchlist --version
+
+Options:
+  -h --help        Show this screen.
+  --version        Show version.
+  -b=<basepair>    Only include tradepairs traded against basepair in watchlist [default: BTC].
+  -i --inverse     Invert every tradepair in watchlist.
+
+Supported exchanges:
+  - binance
+`
 
 
-client.allBookTickers().then((res, err) => {
-    fs.writeFileSync('output/scan-binance-btc-pairs.txt',
-                     matches = _.reduce(
-                         _.filter(res, (obj) => {return obj.symbol.endsWith('BTC')}),
-                         (acc, obj) => {return acc + 'BINANCE:' + obj.symbol + ','}, ''))
+async function main() {
 
-    fs.writeFileSync('output/scan-binance-usd-pairs.txt',
-                     matches = _.reduce(
-                         _.filter(res, (obj) => {return obj.symbol.endsWith('BTC')}),
-                         (acc, obj) => {return acc + 'BINANCE:' + obj.symbol.replace('BTC', 'USD') + ','}, ''))
+    let parsed = docopt(docstring)
+    const exchange = parsed['<exchange>'].toLowerCase()
+    const basepair = parsed['-b'].toUpperCase()
+    const inverted = parsed['--inverse']
 
-    fs.writeFileSync('output/scan-binance-bch-pairs.txt',
-                     matches = _.reduce(
-                         _.filter(res, (obj) => {return obj.symbol.endsWith('BTC')}),
-                         (acc, obj) => {return acc + 'BINANCE:' + obj.symbol + '/BINANCE:BCCBTC' + ','}, ''))
+    // todo: use std-debug
+    console.log(parsed)
 
-    fs.writeFileSync('output/scan-binance-eth-pairs.txt',
-                     matches = _.reduce(
-                         _.filter(res, (obj) => {return obj.symbol.endsWith('ETH')}),
-                         (acc, obj) => {return acc + 'BINANCE:' + obj.symbol + ','}, ''))
+    let tickers = ['dummyBTC', 'tickersETH', 'deadBNB', 'beefBTC']
 
-    fs.writeFileSync('output/scan-binance-bnb-pairs.txt',
-                     matches = _.reduce(
-                         _.filter(res, (obj) => {return obj.symbol.endsWith('BNB')}),
-                         (acc, obj) => {return acc + 'BINANCE:' + obj.symbol + ','}, ''))
+    switch(exchange) {
 
-})
+    case 'binance':
+        tickers = Object.keys(await binance.allBookTickers())
+        break
+
+    default:
+        //todo: use stderr
+        console.log(`Unrecognized exchange: ${parsed['<exchange>']}`)
+        break
+    }
+
+    //todo: use std-debug
+    // console.log(`Tickers: ${tickers}`)
+
+    let filename = `\
+output/scan-\
+${inverted ? 'inverse-' : ''}\
+${exchange}-\
+${basepair.toLowerCase()}-\
+pairs.txt`
+
+
+    //todo: use std-debug
+    console.log(`Writing to filename: ${filename}`)
+
+    let watchlist = tickers
+        .filter(elt => elt.endsWith(basepair))
+        .reduce((acc, elt) => acc + `\
+${inverted ? '0-' : ''}\
+${exchange.toUpperCase()}:\
+${elt.toUpperCase()},`, '')
+
+    //todo: use std-debug
+    console.log(watchlist)
+
+    fs.writeFileSync(filename, watchlist)
+}
+
+main()
