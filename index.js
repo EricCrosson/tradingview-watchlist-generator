@@ -1,6 +1,4 @@
 const fs = require('fs')
-// TODO: is lodash really necessary?
-const _ = require('lodash')
 
 const Binance = require('binance-api-node').default
 const binance = Binance()

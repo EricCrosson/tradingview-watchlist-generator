@@ -18,8 +18,7 @@
     },
     "dependencies": {
         "binance-api-node": "^0.7.6",
-        "docopt": "^0.6.2",
-        "lodash": "^4.17.10"
+        "docopt": "^0.6.2"
     },
     "repository": {
         "type": "git",
