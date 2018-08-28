@@ -1,6 +1,6 @@
 {
     "name": "tradingview-watchlist-generator",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "Apache-2.0",
     "description": "Create TradingView watchlists of all assets on supported cryptocurrency exchanges",
     "keywords": [
