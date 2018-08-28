@@ -1,0 +1,33 @@
+{
+    "name": "tradingview-watchlist-generator",
+    "version": "0.0.1",
+    "license": "Apache-2.0",
+    "description": "Create TradingView watchlists of all assets on supported cryptocurrency exchanges",
+    "keywords": [
+        "binance",
+        "tradingview",
+        "watchlist"
+    ],
+    "main": "index.js",
+    "bin": {
+        "watchlist": "index.js"
+    },
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon -e 'js' -x 'npm start || true'"
+    },
+    "dependencies": {
+        "binance-api-node": "^0.7.6",
+        "docopt": "^0.6.2",
+        "lodash": "^4.17.10"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ericcrosson/tradingview-watchlist-generator.git"
+    },
+    "author": "ericcrosson",
+    "bugs": {
+        "url": "https://github.com/ericcrosson/tradingview-watchlist-generator/issues"
+    },
+    "homepage": "https://github.com/ericcrosson/tradingview-watchlist-generator"
+}
