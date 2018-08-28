@@ -8,6 +8,9 @@ const binance = Binance()
 // TODO: use logger with error messages
 
 // TODO: allow generation of non-exchange pairs (e.g. replace BTC with USD)
+// TODO: allow generation of non-traded pairs (e.g. WAN/ICX)
+
+// TODO: remove defunct pairs (BINANCE:VEN*)
 
 const docopt = require('docopt').docopt
 const docstring = `
